@@ -1,6 +1,16 @@
-import datas
+import json
+from my_env import datas
 
-filename = datas.json
+
+with open(datas.json, 'r', encoding='utf-8') as file:
+    datas = json.load(file) 
+
+transactions = datas["transactions"]
+
+for transaction in transactions:
+     print(transaction)
+
+
 
 #Отображает баланс
 def balance():
@@ -13,4 +23,4 @@ def Editing_an_entry():
     pass
 #Поиск по записи
 def Search_through_records():
-        pass
+    pass
