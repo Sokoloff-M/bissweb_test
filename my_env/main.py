@@ -1,4 +1,6 @@
+import datas
 
+filename = datas.json
 
 #Отображает баланс
 def balance():
