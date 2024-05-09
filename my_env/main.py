@@ -12,6 +12,7 @@ def read_from_json(filename):
     with open(filename, 'r') as f:
         data = json.load(f)
     print("Данные из файла:")
+    print()
     for entry in data:
         print("\n".join([f"{key}: {value}" for key, value in entry.items()]))
         print()
