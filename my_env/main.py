@@ -4,7 +4,7 @@ from datetime import datetime
 def write_to_json(data, filename):
     """Записывает данные в JSON файл."""
     with open(filename, 'w') as f:
-        json.dump(data, f)
+        json.dump(data, f,indent=4)
     print("Данные успешно записаны в файл.")
 
 def read_from_json(filename):
