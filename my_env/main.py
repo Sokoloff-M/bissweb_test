@@ -35,6 +35,7 @@ def add_entry(filename):
     print("Новая запись успешно добавлена.")
 
 def main():
+    """Основная функция программы."""
     filename = 'transactions.json'
     initial_data = []
 
