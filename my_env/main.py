@@ -25,5 +25,12 @@ def add_entry(filename):
     entry["Сумма"] = float(input("Сумма: "))
     entry["Описание"]= input("Описание: ")
     
+    with open(filename,'r+',encoding='utf-8') as f:
+        data = json.load(f)
+        data.append(entry)
+        f.seek(0)
+        json.dump(data,f)
     
+    print('Данные успешно сохранены в файл')
+
     
