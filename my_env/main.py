@@ -4,35 +4,38 @@ from datetime import datetime
 def write_to_json(data, filename):
     """Записывает данные в JSON файл."""
     with open(filename, 'w') as f:
-        json.dump(data, f,indent=4)
+        json.dump(data, f, indent=4)
     print("Данные успешно записаны в файл.")
 
 def read_from_json(filename):
-    """Читает данные из JSON файла и выводит их в консоль."""
+    """Читает данные из JSON файла и возвращает их."""
     with open(filename, 'r') as f:
         data = json.load(f)
-    print("Данные из файла:")
-    print()
-    for entry in data:
-        print("\n".join([f"{key}: {value}" for key, value in entry.items()]))
-        print()
+    return data
 
-def add_entry(filename):
+def add_entry(filename, date, category, amount, description):
     """Добавляет новую запись о расходе или доходе."""
-    entry = {}
-    print("Введите информацию о записи:")
-    entry["Дата"] = datetime.now().strftime('%Y-%m-%d')
-    entry["Категория"] = input("Категория: ")
-    entry["Сумма"] = float(input("Сумма: "))
-    entry["Описание"] = input("Описание: ")
+    entry = {
+        "Дата": date,
+        "Категория": category,
+        "Сумма": amount,
+        "Описание": description
+    }
 
-    with open(filename, 'r+') as f:
-        data = json.load(f)
-        data.append(entry)
-        f.seek(0)
-        json.dump(data, f)
-
-    print("Новая запись успешно добавлена.")
+    try:
+        # Подтверждение перед сохранением данных в файл
+        confirmation = input("Хотите сохранить эту запись? (y/n): ")
+        if confirmation.lower() == "y" or "д":
+            with open(filename, 'r+') as f:
+                data = json.load(f)
+                data.append(entry)
+                f.seek(0)
+                json.dump(data, f, indent=4)
+                print("Новая запись успешно добавлена.")
+        else:
+            print("Добавление записи отменено.")
+    except Exception as e:
+        print(f"Ошибка при добавлении записи: {e}")
 
 def main():
     """Основная функция программы."""
@@ -52,10 +55,17 @@ def main():
 
         if choice == "1":
             # Читаем и выводим все транзакции из файла
-            read_from_json(filename)
+            data = read_from_json(filename)
+            for entry in data:
+                print("\n".join([f"{key}: {value}" for key, value in entry.items()]))
+                print()
         elif choice == "2":
             # Добавляем новую транзакцию
-            add_entry(filename)
+            date = input("Введите дату (ДД-ММ-ГГГГ): ")
+            category = input("Введите категорию: ")
+            amount = float(input("Введите сумму: "))
+            description = input("Введите описание: ")
+            add_entry(filename, date, category, amount, description)
         elif choice == "3":
             print("Выход из программы.")
             break
