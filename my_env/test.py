@@ -34,7 +34,7 @@ class TestTransactions(unittest.TestCase):
         new_entry = {"Дата": "2024-05-04", "Категория": "Доход", "Сумма": 3000, "Описание": "Премия"}
 
         # Вызываем тестируемую функцию
-        add_entry(self.filename, **new_entry)
+        add_entry(self.filename, new_entry["Дата"], new_entry["Категория"], new_entry["Сумма"], new_entry["Описание"])
 
         # Проверяем, что новая запись была успешно добавлена в файл
         with open(self.filename, 'r') as f:
